@@ -4,12 +4,12 @@ import { NextResponse } from "next/server";
 
 export async function GET(req , {params}) {
     try {
-        let blog = Blog.findOne({_id:params._id});
+        let blog = await Blog.findOne({_id:params._id});
         if(blog) {
             return NextResponse.json({success:true , blog});            
         }
         return NextResponse.json({success:false , message:"invalid request!"});
     } catch(error) {
-        return NextResponse.json({success:false , message:error.message});
+        return NextResponse.json({success:false , message:"invalid request!"});
     }
 }

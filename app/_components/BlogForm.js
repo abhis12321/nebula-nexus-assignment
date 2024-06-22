@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react'
 
-export default function BlogForm({ setBlogForm , setBlogs }) {
+export default function BlogForm({ setBlogForm, setBlogs }) {
     const [title, setTitle] = useState('');
     const [authorName, setAuthorName] = useState('');
     const [linkdInProfileURL, setLinkdInProfileURL] = useState('');
@@ -10,17 +10,21 @@ export default function BlogForm({ setBlogForm , setBlogs }) {
 
     const handleSubmit = e => {
         e.preventDefault();
-        axios.post('/api', { title, authorName, linkdInProfileURL, content, imgURL })
-            .then(response => response.data)
-            .then(data => data.success ? setBlogs(data.blog) : alert(data.message))
-            .catch(error => console.log(error.message))
+        if (content.length >= 100) {
+            axios.post('/api', { title, authorName, linkdInProfileURL, content, imgURL })
+                .then(response => response.data)
+                .then(data => data.success ? setBlogs(data.blog) : alert(data.message))
+                .catch(error => console.log(error.message))
 
-        setTitle('');
-        setAuthorName('');
-        setLinkdInProfileURL('');
-        setContent('');
-        setImgURL('');
-        setBlogForm(false);
+            setTitle('');
+            setAuthorName('');
+            setLinkdInProfileURL('');
+            setContent('');
+            setImgURL('');
+            setBlogForm(false);
+        } else {
+            alert("your blog length is less than 100 BUT it should be between 100 to 450")
+        }
     }
 
     return (
@@ -35,7 +39,7 @@ export default function BlogForm({ setBlogForm , setBlogs }) {
 
                 <input value={imgURL} onChange={e => setImgURL(e.target.value)} placeholder='url of an image for this blog' type="text" className="rounded py-2 px-3 w-full ring-1 ring-cyan-600/50 focus:ring-violet-800 outline-none text-blue-700 focus:text-violet-800 focus:bg-red-700/5" />
 
-                <textarea value={content} onChange={e => (e.target.value).length < 450 && setContent(e.target.value)} placeholder='write your blog here(withing 450 characters)...' cols="30" rows="9" className='rounded py-2 px-3 w-full ring-1 ring-cyan-600/50 focus:ring-violet-800 outline-none text-blue-700 focus:text-violet-800 focus:bg-red-700/5' required></textarea>
+                <textarea value={content} onChange={e => (e.target.value).length < 450 && setContent(e.target.value)} placeholder='write your blog here(within [100 , 450] characters)...' cols="30" rows="9" className='rounded py-2 px-3 w-full ring-1 ring-cyan-600/50 focus:ring-violet-800 outline-none text-blue-700 focus:text-violet-800 focus:bg-red-700/5' required></textarea>
                 <div className="flex items-center justify-between w-full">
                     <div className="rounded py-[8px] w-[48%] ring-1 ring-cyan-600/50 focus:ring-violet-800 outline-none bg-red-800 hover:bg-red-600 active:bg-blue-800 text-white text-center" onClick={e => setBlogForm(false)}>cancel</div>
                     <input type="submit" value={'post'} className='rounded py-[8px] w-[48%] ring-1 ring-cyan-600/50 focus:ring-violet-800 outline-none bg-red-800 hover:bg-red-600 active:bg-blue-800 text-white text-center' required />

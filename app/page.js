@@ -13,7 +13,7 @@ export default function page() {
         .then(response => response.data)
         .then(data => data.success ? setBlogs(data.blogs) : console.log(data.message))
         .catch(error => console.log(error.message));
-  });
+  } , []);
 
 
   return (
