@@ -8,7 +8,7 @@ export default function BlogCard({ blog }) {
             <Image src={blog.imgURL} className=''/>
             <h2 className="">{blog.title}</h2>
             <p className="">{blog.content}</p>
-            <Link href={blog.lnkdnURL} className=''>{blog.authorName}</Link>
+            <Link href={blog.linkdInProfileURL} className=''>{blog.authorName}</Link>
         </div>
     )
 }
