@@ -10,7 +10,7 @@ export default function BlogForm({ setBlogForm , setBlogs }) {
 
     const handleSubmit = e => {
         e.preventDefault();
-        axios.post('/blogAPI', { title, authorName, linkdInProfileURL, content, imgURL })
+        axios.post('/api', { title, authorName, linkdInProfileURL, content, imgURL })
             .then(response => response.data)
             .then(data => data.success ? setBlogs(data.blog) : alert(data.message))
             .catch(error => console.log(error.message))
